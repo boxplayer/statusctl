@@ -1,14 +1,20 @@
 import Image from "next/image";
 import Weather from "./widgets/Weather/WeatherCard";
+import LiveFX from "./widgets/LiveFX/LiveFX";
 
 export default function Home() {
   return (
     <div>
-      <main className="grid sm:grid-cols-1 lg:grid-cols-3 items-center justify-items-stretch min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-        <Weather />
-        <Weather />
-        <Weather />
-        <Weather />
+      <main className="grid grid-rows-[repeat(auto-fill,minmax(160px,1fr))] sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-8 sm:p-20 pb-20 justify-items-stretch">
+        <div className="row-span-2">
+          <Weather />
+        </div>
+        <LiveFX baseCurrency="GBP" />
+        <LiveFX baseCurrency="USD" />
+        <LiveFX baseCurrency="EUR" />
+        <div className="row-span-2">
+          <Weather />
+        </div>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a

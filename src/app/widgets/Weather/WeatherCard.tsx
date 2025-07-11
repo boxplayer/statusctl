@@ -32,7 +32,7 @@ export default async function Weather() {
           <LucideThermometer /> {current}°C
         </span>
         <span className="text-sm text-muted-foreground">Warsaw</span>
-        <div>
+        <div className="py-3">
           <WeatherTable hourly={hourly} />
         </div>
         <WeatherChart chartConfig={chartConfig} chartData={hourly} />
