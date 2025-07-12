@@ -1,7 +1,7 @@
-import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import { getFxRate } from "../../../../actions/getFxRate";
 import { ChartConfig } from "@/components/ui/chart";
+import { getFxRate } from "../../../../actions/getFxRate";
 import { LiveFXChart } from "./LiveFXChart.client";
+import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 
 const chartConfig = {
   rate: {
@@ -10,12 +10,8 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default async function LiveFX({
-  baseCurrency,
-}: {
-  baseCurrency: string;
-}) {
-  const fxRates = await getFxRate(baseCurrency);
+export default async function LiveFX({}: { baseCurrency: string }) {
+  const fxRates = await getFxRate("GBP");
 
   const { pair, latest, history } = fxRates;
 
