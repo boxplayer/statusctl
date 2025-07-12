@@ -20,7 +20,7 @@ const chartConfig = {
 export default async function Weather() {
   // TODO: get weather by current location
   const weather = await getWeather();
-  const { current, hourly } = weather;
+  const { current, hourly, lastUpdated } = weather;
 
   return (
     <Card>

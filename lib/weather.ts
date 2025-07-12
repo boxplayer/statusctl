@@ -28,6 +28,7 @@ export async function fetchForecast(
     `&timezone=${tz}`;
 
   const res = await fetch(api, { next: { revalidate: 1800 } }); // 30 min
+
   if (!res.ok) throw new Error("weather-api-fail");
   const json = await res.json();
 
