@@ -10,9 +10,6 @@ export default async function askGemini(prompt: string) {
     contents: prompt,
   });
 
-  // TODO: remove
-  console.log(completion.text);
-
   const text = completion.text;
 
   if (!text) {

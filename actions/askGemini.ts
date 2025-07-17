@@ -1,3 +1,5 @@
+"use server";
+
 import { cache } from "react";
 import { Redis } from "@upstash/redis";
 import askGemini from "../lib/gemini";
