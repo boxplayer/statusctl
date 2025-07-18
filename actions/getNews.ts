@@ -1,13 +1,11 @@
 "use server";
 
-import { cache } from "react";
 import { fetchRss } from "../lib/rss";
 import { Item } from "rss-parser";
 
-export const getArchNews = cache(async () => {
+export const getArchNews = async () => {
   const feed = await fetchRss("https://archlinux.org/feeds/news/");
 
-  // TODO: Fix any
   const items = feed.items.slice(0, 5).map((item: Item) => ({
     title: item.title || "Untitled",
     link: item.link || "#",
@@ -16,4 +14,4 @@ export const getArchNews = cache(async () => {
   }));
 
   return items;
-});
+};

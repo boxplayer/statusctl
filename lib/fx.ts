@@ -1,5 +1,6 @@
 import { sub } from "date-fns";
 import { format } from "date-fns-tz";
+
 const tz = "Europe/Warsaw";
 
 export interface NBPRate {
@@ -32,8 +33,14 @@ export const fetchFxRate = async (baseCurrency = "GBP"): Promise<FxSeries> => {
   });
 
   const nbpApi = `https://api.nbp.pl/api/exchangerates/rates/a/${baseCurrency}/${startDate}/${endDate}/?format=json`;
+  const cacheTag = `fx-${baseCurrency}-${endDate}`;
 
-  const res = await fetch(nbpApi, { next: { revalidate: 43_200 } });
+  console.log({ cacheTag });
+  console.log({ nbpApi });
+
+  const res = await fetch(nbpApi, {
+    next: { revalidate: 3_600, tags: [cacheTag] },
+  });
   if (!res.ok) throw new Error("fx-api-fail");
   const json = await res.json();
 

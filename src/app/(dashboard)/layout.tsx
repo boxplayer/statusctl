@@ -17,7 +17,7 @@ export default function DashboardLayout({
   return (
     <main
       className="
-        grid auto-rows-[400px]
+        grid auto-rows-[350px]
         lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 
         gap-8
         p-8 sm:p-20 pb-20
@@ -25,7 +25,7 @@ export default function DashboardLayout({
       "
     >
       <div className="row-span-2">{weather}</div>
-
+      <div>{livefx}</div>
       <div>{livefx}</div>
 
       <div>{vimtip}</div>

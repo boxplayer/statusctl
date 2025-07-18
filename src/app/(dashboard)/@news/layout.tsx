@@ -11,9 +11,9 @@ export default function NewsLayout({
 }) {
   return (
     <div className="flex flex-col gap-4 h-full">
-      <div className="flex-1 p-4 rounded">{newsArch}</div>
+      <div className="flex-1 p-4">{newsArch}</div>
 
-      <div className="flex-1 p-4 rounded">{newsNeovim}</div>
+      <div className="flex-1 p-4">{newsNeovim}</div>
     </div>
   );
 }
