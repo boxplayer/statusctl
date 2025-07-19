@@ -58,3 +58,88 @@ export async function fetchForecast(
 
   return { current, hourly };
 }
+
+export interface PollenSummary {
+  regionCode: string;
+  dailyInfo: PollenDaily[];
+}
+
+export interface PollenDaily {
+  date: PollenDate;
+  pollenTypeInfo: PollenTypeInfo[];
+  plantInfo: PlantInfo[];
+}
+
+export interface PollenDate {
+  year: number;
+  month: number;
+  day: number;
+}
+
+export interface PollenTypeInfo {
+  code: string;
+  displayName: string;
+  inSeason: boolean;
+  indexInfo: PollenIndexInfo;
+  healthRecommendations?: string[];
+}
+
+export interface PlantInfo {
+  code: string;
+  displayName: string;
+  inSeason?: boolean;
+  indexInfo?: PollenIndexInfo;
+  plantDescription?: PlantDescription;
+}
+
+export interface PollenIndexInfo {
+  code: string;
+  displayName: string;
+  value: number;
+  category: "None" | "Very Low" | "Low" | "Moderate" | "High" | "Very High";
+  indexDescription: string;
+  color: RGBColor;
+}
+
+export interface RGBColor {
+  red?: number;
+  green?: number;
+  blue?: number;
+}
+
+export interface PlantDescription {
+  type: "TREE" | "GRASS" | "WEED";
+  family: string;
+  season: string;
+  specialColors: string;
+  specialShapes: string;
+  crossReaction: string;
+  picture: string;
+  pictureCloseup: string;
+}
+export interface PollenSummary {
+  dailyInfo: PollenDaily[];
+  regionCode: string;
+}
+
+export const fetchPollen = async (
+  lat = 52.2297,
+  lon = 21.0122,
+): Promise<PollenSummary> => {
+  const qs = new URLSearchParams({
+    "location.latitude": lat.toString(),
+    "location.longitude": lon.toString(),
+    days: "5",
+    key: process.env["GCP_API_KEY"]!,
+  });
+
+  const res = await fetch(
+    `https://pollen.googleapis.com/v1/forecast:lookup?${qs}`,
+    {
+      next: { revalidate: 86_400 },
+    },
+  );
+
+  if (!res.ok) throw new Error("pollen-api-fail");
+  return res.json();
+};

@@ -1,0 +1,257 @@
+
+# Next.js + Full‑Stack Upskilling Roadmap (6‑Week Sprint)
+
+> **Personal Goal:** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+---
+
+## 1. Pick Your Project Theme
+
+Choose one (or define your own):
+
+| Option                                     | Quick‑win value                                                              |
+| ------------------------------------------ | ---------------------------------------------------------------------------- |
+| **1. Habit Tracker with Streak Analytics** | Showcases Server Actions & dynamic charts; helps track daily coding/practice |
+| **2. PLN/GBP Personal Finance Dashboard**  | Integrates real FX APIs, Edge caching; immediate personal benefit            |
+| **3. Warsaw Event Aggregator**             | Pulls Meetup/Eventbrite APIs, streams RSC updates; plan your weekends        |
+| **4. Nutrition & Workout Log**             | Uses tRPC + Prisma relations; mobile‑friendly PWA for health tracking        |
+| **5. AI Daily Digest**                     | Summarises your feeds via OpenAI; demonstrates Edge + background tasks       |
+
+*Pick one and write it in the Personal Goal blank above.*
+
+---
+
+## 2. Tech Stack Baseline
+
+* **Next.js 15 (App Router)**
+* **TypeScript 5.5**
+* **Tailwind CSS 4 + shadcn/ui**
+* **tRPC + Zod** for typed API layer
+* **Prisma ORM** with Postgres (Docker)
+* **Auth.js** authentication
+* **Vitest 3 & React Testing Library** unit tests
+* **Playwright** E2E tests
+* **Docker Compose** + **GitHub Actions** CI
+* Optional: **Turbopack** (dev) & **Vercel** deployment
+
+---
+
+## 3. Weekly Breakdown
+
+| Week  | Deliverables                                             | Focus Concepts                                  |
+| ----- | -------------------------------------------------------- | ----------------------------------------------- |
+| **1** | Scaffold project; Tailwind & shadcn; push to GitHub      | App Router basics, layout.tsx, Tailwind theming |
+| **2** | Auth flow (Auth.js); dashboard skeleton                  | RSC vs client components, Server Actions        |
+| **3** | Data layer: Prisma schema & seed; tRPC routers           | End‑to‑end type safety, Zod validation          |
+| **4** | CRUD via Server Actions; optimistic UI (`useTransition`) | Server Actions lifecycle, caching               |
+| **5** | Edge Route/Middleware; Vercel Analytics; vitest tests    | Edge runtime, testing patterns                  |
+| **6** | Playwright E2E; CI workflow; perf budget; deploy         | CI/CD, Lighthouse, polish & portfolio prep      |
+
+---
+
+## 4. Stretch Goals
+
+* Enable **Partial Pre‑Rendering (PPR)** on marketing pages
+* Turn on **React Compiler** optimisation flag
+* Integrate **Turbopack** for faster local dev
+* Theme switcher with Tailwind 4 variables
+* Containerise with **Docker Compose** for team parity
+
+---
+
+## 5. Resources
+
+| Topic                    | Link                                                                       |
+| ------------------------ | -------------------------------------------------------------------------- |
+| Next.js Learn            | [https://nextjs.org/learn](https://nextjs.org/learn)                       |
+| T3 Stack Bootcamp        | [https://create.t3.gg/en/learn](https://create.t3.gg/en/learn)             |
+| Prisma Docs              | [https://www.prisma.io/docs](https://www.prisma.io/docs)                   |
+| Auth.js + Server Actions | [https://authjs.dev/guides/nextjs](https://authjs.dev/guides/nextjs)       |
+| Vitest Handbook          | [https://vitest.dev/guide](https://vitest.dev/guide)                       |
+| Playwright & Next.js     | [https://playwright.dev/docs/next-js](https://playwright.dev/docs/next-js) |
+| Deploy to Vercel         | [https://vercel.com/docs](https://vercel.com/docs)                         |
+
+---
+
+## 6. Success Criteria
+
+* [ ] Live URL & GitHub repo in résumé
+* [ ] ≥ 80 % vitest coverage on core logic
+* [ ] Lighthouse Performance ≥ 90 (mobile)
+* [ ] Server Action mutation ships 0 KB client JS
+* [ ] One Edge Route logs geodata
+* [ ] CI badge green on main branch
+
+---
+
+## 7. Next Steps
+
+1. Choose a **Project Theme** and fill in your Personal Goal.
+2. Block 6–8 hours weekly for build sessions.
+3. After Week 2, schedule a mock code‑review or pair session.
+
+---
+
+*Happy building! Ping me anytime for code review or debugging help.*
+
+
+
+
+
+# AI Daily Digest Dashboard ─ Six‑Week Build Plan
+
+> **Personal Goal (fill in):** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+>
+> See everything you care about each morning on one fast‑loading page:
+> **Weather (Warsaw), PLN ⇆ GBP rate, local headlines, Arch Linux & Neovim changelogs, fresh music picks – all summarised by AI.**
+
+---
+
+## 0. System Overview
+
+```
+Next.js 15 (App Router)
+ ├─┬ Server Actions (⟳ every 30 min)
+ │ ├── WeatherService  ─→ OpenWeather API
+ │ ├── FxService        ─→ ECB / exchangerate.host
+ │ ├── WarsawNewsFeed   ─→ RSS ↦ AI summary
+ │ ├── ArchFeed         ─→ RSS ↦ AI summary
+ │ ├── NvimFeed         ─→ GitHub RSS ↦ AI summary
+ │ └── MusicRecs        ─→ Spotify API ("New Releases")
+ ├─ Edge Cron (Vercel)  ─ triggers Server Actions
+ ├─ Postgres (Prisma)   ─ stores user prefs & cached summaries
+ └─ Frontend            ─ Tailwind 4 + shadcn/ui cards
+```
+
+*All heavy lifting happens server‑side; the browser only receives lightweight RSC‑rendered HTML + hydrated widgets where needed.*
+
+---
+
+## 1. Data Sources & Implementation Notes
+
+| Feed              | API / Endpoint                                                                                 | Refresh | Notes                                                   |
+| ----------------- | ---------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------- |
+| Weather           | `api.open-meteo.com` (free) OR OpenWeather                                                     | 30 min  | Pass `latitude=52.23&longitude=21.01` (Warsaw)          |
+| Currency GBP⇆PLN  | `https://api.exchangerate.host/latest?base=GBP&symbols=PLN`                                    | 60 min  | No key required; ECB rates                              |
+| Warsaw news       | Polish news RSS e.g. `https://www.um.warszawa.pl/rss` + `https://warszawa.wyborcza.pl/rss.xml` | 60 min  | Pipe top 5 through OpenAI `gpt‑4o` for 3‑bullet summary |
+| Arch Linux news   | `https://archlinux.org/feeds/news/`                                                            | 24 h    | Show latest item; highlight breaking changes            |
+| Neovim releases   | GitHub releases RSS `https://github.com/neovim/neovim/releases.atom`                           | 24 h    | Display tag, changelog excerpt                          |
+| Music suggestions | Spotify Web API `new‑releases?country=PL`                                                      | 24 h    | Requires OAuth; cache token server‑side                 |
+
+*Swap / add feeds freely by extending `feedRegistry.ts`.*
+
+---
+
+## 2. Tech Stack
+
+* **Next.js 15** (App Router + RSC + Server Actions)
+* **TypeScript 5.5**
+* **Tailwind CSS 4** + **shadcn/ui** components
+* **Prisma ORM** + **Postgres** (Docker‑Compose)
+* **tRPC + Zod** for typed internal RPC (optional – can stick to Server Actions alone)
+* **Auth.js** (if multi‑user, else skip)
+* **Vitest 3** + **React Testing Library**
+* **Playwright 1.45** for E2E
+* **OpenAI SDK** for summarisation (Edge runtime)
+* **Vercel Cron Jobs** or GitHub Actions Scheduled Workflows for periodic refresh
+
+---
+
+## 3. Six‑Week Timeline
+
+| Week  | Deliverables                                                         | Key Concepts                                             |
+| ----- | -------------------------------------------------------------------- | -------------------------------------------------------- |
+| **1** | Project scaffold, Tailwind/shadcn set‑up, basic layout (+ dark mode) | App Router layouts, Tailwind 4 theming                   |
+| **2** | Weather & currency Server Actions; render with RSC cards             | Fetch in Server Actions, ISR / caching, suspense loading |
+| **3** | Warsaw news + AI summary pipeline; store cache in Postgres           | OpenAI API in Edge, Prisma schema, cron trigger          |
+| **4** | Arch & Neovim feeds; add tRPC endpoint for feed registry             | RSS parsing, Zod validation, optimistic UI edits         |
+| **5** | Spotify new releases widget; settings page for selecting feeds       | OAuth flow, Edge config secrets, shadcn forms            |
+| **6** | Testing (Vitest + Playwright), CI/CD, performance audit, deploy      | CI matrix, Lighthouse ≥90, README polish                 |
+
+---
+
+## 4. Stretch Goals
+
+* 📱 **PWA / mobile home‑screen** (Next‑PWA)
+* 🗣️ **Voice summary** → generate audio via Edge TTS & play in‑browser
+* 🖼️ **Image of the Day** (Unsplash API)
+* 🔔 **Push notifications** when severe weather or zł swings > 1 %
+* 🖥️ **Desktop widget** via Electron or Tauri
+
+---
+
+## 5. Success Criteria (Definition of Done)
+
+* ☐ Dashboard loads ≤1 s on cold Edge‑cached visit from Warsaw
+* ☐ Each card states last‑updated timestamp & manual refresh button
+* ☐ Unit test coverage ≥80 %
+* ☐ Playwright script passes in CI (headless Chromium & WebKit)
+* ☐ All API keys stored in Vercel project env‑vars; none leaked to client
+* ☐ README includes **“How it works”** diagram + one‑click Vercel deploy button
+
+---
+
+## 6. Recommended Resources
+
+| Topic                      | Link                                                                                                                                                                     |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Next.js Server Actions doc | [https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions) |
+| Vercel Cron Jobs           | [https://vercel.com/docs/cron-jobs](https://vercel.com/docs/cron-jobs)                                                                                                   |
+| OpenAI JS SDK              | [https://platform.openai.com/docs/quickstart?lang=nodejs](https://platform.openai.com/docs/quickstart?lang=nodejs)                                                       |
+| RSS Parsing in TS          | [https://rubenerd.com/rss-with-feedparser/](https://rubenerd.com/rss-with-feedparser/)                                                                                   |
+| Spotify API Guide          | [https://developer.spotify.com/documentation/web-api](https://developer.spotify.com/documentation/web-api)                                                               |
+| Playwright with Next.js    | [https://playwright.dev/docs/nextjs](https://playwright.dev/docs/nextjs)                                                                                                 |
+
+---
+
+### Next Steps for You
+
+1. **Fill in your Personal Goal** at the top.
+2. Confirm the feed list or add any other interests.
+3. I’ll generate code scaffolding snippets (env vars, feed interfaces) and schedule reminders if helpful.
+
+---
+
+*Let me know whenever you’re ready to dive into Week 1, and we’ll set up the repo together!*
+
+
+
+| Widget                                    | Data source ideas                                                                                                                                                    | Update cadence                     | UI / tech notes                                                                                                    |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **Ask ChatGPT about today**               | Server Action that pulls the latest JSON from the other widgets → packs into an OpenAI chat call (`system`: “You are a helpful assistant…”, `user`: aggregated data) | 07:00 local, then on-demand button | Render as 3–5 concise bullets in a Card; add a “🔄 Re-ask” button (calls same Server Action)                       |
+
+| **Weather (Warsaw)**                      | Tomorrow\.io, Open-Meteo, or NWS’s met.no (all free, no API key needed)                                                                                              | 30 min cache                       | Tiny “now” icon + temp, then min/max below. Use RSC streamed to avoid client JS                                    |
+
+| **Live currency PLN ↔ GBP (and € maybe)** | 🇪🇺 ECB daily XML or NBP JSON; fallback to exchangerate.host                                                                                                        | 1 h cache                          | Show big PLN/GBP number, smaller PLN/EUR beneath. Add sparkline (last 7 days) with `use client` component          |
+
+| **Local Warsaw news**                     | Wyborcza Warszawa RSS, UM Warszawa open-data RSS, PAP local news feed                                                                                                | 1 h                                | Display top 3 headlines with favicon + source; click opens in new tab. On hover → 150-char LLM TL;DR               |
+
+| **Arch + Neovim changelogs**              | Arch: [https://www.archlinux.org/feeds/news/](https://www.archlinux.org/feeds/news/); Neovim GitHub releases RSS                                                     | Daily at 06:00                     | Collapsible accordion inside a “Dev Changelogs” Card; highlight **breaking** keywords                              |
+
+| **YouTube music player**                  | YouTube Data API v3: pull your “Mix for You” playlistID, or static playlist                                                                                          | On demand                          | Use YouTube IFrame; mute autoplay off. Show track list fetched via `listPlaylistItems`                             |
+
+| **Air quality / pollen**                  | GIOŚ sensor JSON (PM10/PM2.5) + IQAir/Ambee pollen API                                                                                                               | 30 min                             | Color-coded badge (“Good / Moderate / Unhealthy”) and tiny pollen bar. Edge Function can geolocate when you travel |
+
+| **Vim shortcut of the day**               | Pre-baked JSON (400+ tips) or scrape `vim-tips.org` RSS                                                                                                              | Rotates daily (UTC midnight)       | Card with key-combo, description, “Copy” button; optional “★ Save to favorites”                                    |
+
+
+
+📦 Next.js 15 App (Vercel)
+├── /components
+│   ├── WeatherCard.tsx         (RSC)
+│   ├── CurrencyCard.tsx        (RSC + client sparkline)
+│   ├── NewsCard.tsx            (RSC)
+│   ├── DevChangelogCard.tsx    (RSC)
+│   ├── MusicPlayer.client.tsx  ('use client' YouTube iframe)
+│   ├── AirQualityCard.tsx      (RSC)
+│   └── VimTipCard.tsx          (RSC)
+├── /actions
+│   ├── getWeather.ts
+│   ├── getFxRate.ts
+│   ├── getNews.ts
+│   ├── getChangelogs.ts
+│   ├── getAirQuality.ts
+│   ├── getVimTip.ts
+│   └── askChatGPTAboutToday.ts
+└── /edge
+    └── geo.ts  (geo-IP, sets cookie for location override)

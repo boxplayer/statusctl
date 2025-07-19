@@ -10,10 +10,10 @@ export default function NewsLayout({
   newsNeovim: ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-4 h-full">
-      <div className="flex-1 p-4">{newsArch}</div>
+    <div className="flex flex-col gap-8 h-full">
+      <div className="flex-1 ">{newsArch}</div>
 
-      <div className="flex-1 p-4">{newsNeovim}</div>
+      <div className="flex-1 ">{newsNeovim}</div>
     </div>
   );
 }
