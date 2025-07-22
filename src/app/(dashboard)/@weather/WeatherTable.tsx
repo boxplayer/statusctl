@@ -13,7 +13,7 @@ export const WeatherTable = ({ hourly }: { hourly: HourlySnap[] }) => (
   <Table>
     <TableHeader>
       <TableRow>
-        <TableHead className="w-[100px]">Hour</TableHead>
+        <TableHead>Hour</TableHead>
         <TableHead>Temperature</TableHead>
         <TableHead>Wind</TableHead>
         <TableHead>Rain</TableHead>
