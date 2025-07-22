@@ -27,7 +27,7 @@ export const PollenChart = ({
       margin={{
         left: 20,
         right: 20,
-        top: 20,
+        top: 0,
       }}
     >
       <XAxis type="number" domain={[0, 5]} orientation="top" />

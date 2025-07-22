@@ -35,7 +35,9 @@ export default function DashboardLayout({
           {vimtip}
         </div>
       </div>
-      <div className="lg:col-span-2 md:col-span-1 row-span-2">{news}</div>
+      <div className="lg:col-span-2 md:col-span-1 row-span-2 min-w-0">
+        {news}
+      </div>
       {children}
     </main>
   );
