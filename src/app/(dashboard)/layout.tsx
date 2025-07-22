@@ -6,6 +6,7 @@ export default function DashboardLayout({
   weather,
   livefx,
   vimtip,
+  triviatip,
   news,
   airQuality,
 }: {
@@ -13,6 +14,7 @@ export default function DashboardLayout({
   weather: ReactNode;
   livefx: ReactNode;
   vimtip: ReactNode;
+  triviatip: ReactNode;
   news: ReactNode;
   airQuality: ReactNode;
 }) {
@@ -29,12 +31,13 @@ export default function DashboardLayout({
       <div className="row-span-2">{weather}</div>
       <div className="row-span-2">{airQuality}</div>
       <div className="row-span-2">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-8">
           {livefx}
 
           {vimtip}
         </div>
       </div>
+      {triviatip}
       <div className="lg:col-span-2 md:col-span-1 row-span-2 min-w-0">
         {news}
       </div>

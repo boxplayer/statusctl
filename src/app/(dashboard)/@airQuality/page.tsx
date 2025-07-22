@@ -39,9 +39,11 @@ function categoryColor(cat: string) {
 
 function prepTrend(outlook: PollenDaily[]) {
   return outlook.map((d) => {
-    const day = new Date(d.date.year, d.date.month - 1, d.date.day)
-      .toISOString()
-      .split("T")[0];
+    const day = new Date(
+      d.date.year,
+      d.date.month - 1,
+      d.date.day,
+    ).toISOString();
 
     const val = (code: "GRASS" | "WEED" | "TREE") =>
       d.pollenTypeInfo.find((p) => p.code === code)?.indexInfo?.value ?? 0;
@@ -58,15 +60,15 @@ function prepTrend(outlook: PollenDaily[]) {
 const chartConfig = {
   WEED: {
     label: "Weed",
-    color: "#d946ef",
+    color: "#bd7ebe",
   },
   GRASS: {
     label: "Grass",
-    color: "#38bdf8",
+    color: "#beb9db",
   },
   TREE: {
     label: "Tree",
-    color: "#7c3aed",
+    color: "#7eb0d5",
   },
 } satisfies ChartConfig;
 

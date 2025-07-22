@@ -30,7 +30,9 @@ export default async function NeoVimNews() {
           <TableBody>
             {news.map((item, index) => (
               <TableRow key={index}>
-                <TableCell className="font-medium">{item.title}</TableCell>
+                <TableCell className="font-medium max-w-[12rem] truncate">
+                  {item.title}
+                </TableCell>
                 <TableCell>
                   {new Date(item.pubDate).toLocaleDateString(undefined, {
                     year: "numeric",

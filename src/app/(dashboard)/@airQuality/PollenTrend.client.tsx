@@ -46,7 +46,6 @@ export const PollenTrendChart = ({
         interval={0}
         fontSize={12}
         tickFormatter={(value) => {
-          console.log({ value });
           const d = parseISO(value);
           return isToday(d) ? "Today" : format(d, "EEE");
         }}
