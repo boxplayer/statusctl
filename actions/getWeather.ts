@@ -11,16 +11,10 @@ export const getPollenData = cache(async () => {
   const summary = await fetchPollen();
 
   const today = summary.dailyInfo[0];
-  const outlook = summary.dailyInfo.slice(1); // next 4 days
-
-  /* Today per-type risk */
-  const todayByType = Object.fromEntries(
-    today.pollenTypeInfo.map((t) => [t.code, t]),
-  );
+  const outlook = summary.dailyInfo;
 
   return {
     today,
     outlook,
-    todayByType,
   };
 });

@@ -1,7 +1,13 @@
 import { ChartConfig } from "@/components/ui/chart";
 import { getFxRate } from "../../../../actions/getFxRate";
 import { LiveFXChart } from "./LiveFXChart.client";
-import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 
 const chartConfig = {
   rate: {
@@ -19,13 +25,13 @@ export default async function LiveFX({}: { baseCurrency: string }) {
     <Card>
       <CardHeader>
         <CardTitle>FX Rate</CardTitle>
+        <CardDescription>Updated {latest.date}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-row items-center gap-5">
+        <div className="flex flex-row items-center gap-5 mb-4">
           <span className="text-3xl flex flex-row items-center">{pair}</span>
           <p className="text-3xl font-semibold">{latest.rate.toFixed(2)}</p>
         </div>
-        <p className="text-sm text-muted-foreground">Updated {latest.date}</p>
         <LiveFXChart chartConfig={chartConfig} chartData={history} />
       </CardContent>
     </Card>

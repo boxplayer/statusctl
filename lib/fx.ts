@@ -35,9 +35,6 @@ export const fetchFxRate = async (baseCurrency = "GBP"): Promise<FxSeries> => {
   const nbpApi = `https://api.nbp.pl/api/exchangerates/rates/a/${baseCurrency}/${startDate}/${endDate}/?format=json`;
   const cacheTag = `fx-${baseCurrency}-${endDate}`;
 
-  console.log({ cacheTag });
-  console.log({ nbpApi });
-
   const res = await fetch(nbpApi, {
     next: { revalidate: 3_600, tags: [cacheTag] },
   });

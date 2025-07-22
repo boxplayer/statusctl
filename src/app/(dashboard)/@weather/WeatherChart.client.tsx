@@ -50,8 +50,8 @@ export const WeatherChart = ({
       >
         <LabelList
           dataKey="wind"
-          position="top" // "top" | "bottom" | "insideTop" | …
-          formatter={(v: number) => `${v}`} // append ° symbol
+          position="top"
+          formatter={(v: number) => `${v}`}
           fontSize={10}
           fill="hsl(var(--foreground))"
         />
@@ -66,8 +66,8 @@ export const WeatherChart = ({
       >
         <LabelList
           dataKey="temp"
-          position="top" // "top" | "bottom" | "insideTop" | …
-          formatter={(v: number) => `${v}°`} // append ° symbol
+          position="top"
+          formatter={(v: number) => `${v}°`}
           fontSize={10}
           fill="hsl(var(--foreground))"
         />

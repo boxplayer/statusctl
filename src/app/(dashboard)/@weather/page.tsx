@@ -25,7 +25,12 @@ export default async function Weather() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Weather</CardTitle>
+        <CardTitle>
+          <div className="flex flex-row justify-between">
+            <div>Weather</div>
+            <div className="text-muted-foreground text-sm">Warsaw</div>
+          </div>
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <span className="text-3xl flex flex-row items-center">
