@@ -12,9 +12,7 @@ export default async function VimTip() {
         <CardTitle>Trivia Tip</CardTitle>
       </CardHeader>
       <CardContent>
-        <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-2xl font-semibold">
-          {title}
-        </code>
+        <div className="text-2xl">{title}</div>
         <span className="text-xl flex text-muted-foreground flex-row items-center py-3">
           {description}
         </span>
