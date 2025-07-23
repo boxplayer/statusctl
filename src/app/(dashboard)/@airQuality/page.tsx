@@ -75,6 +75,11 @@ const chartConfig = {
 export default async function AirQuality() {
   const { today, outlook } = await getPollenData();
 
+  //TODO: change this
+  if (!today || !outlook?.length) {
+    return <div> no data</div>;
+  }
+
   const bars = prepTodayBars(today);
   const date = new Date(today.date.year, today.date.month - 1, today.date.day);
   const trendData = prepTrend(outlook);
