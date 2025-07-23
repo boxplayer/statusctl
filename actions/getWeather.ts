@@ -10,6 +10,13 @@ export const getWeather = cache(async () => {
 export const getPollenData = cache(async () => {
   const summary = await fetchPollen();
 
+  if (!summary?.dailyInfo?.length) {
+    return {
+      today: undefined,
+      outlook: [],
+    };
+  }
+
   const today = summary.dailyInfo[0];
   const outlook = summary.dailyInfo;
 
