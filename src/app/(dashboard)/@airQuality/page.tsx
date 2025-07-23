@@ -13,7 +13,11 @@ import { ChartConfig } from "@/components/ui/chart";
 
 function prepTodayBars(daily: PollenDaily) {
   return daily.pollenTypeInfo
-    .filter((t) => ["GRASS", "WEED", "TREE"].includes(t.code))
+    .filter(
+      (t) =>
+        ["GRASS", "WEED", "TREE"].includes(t.code) &&
+        t.indexInfo !== undefined,
+    )
     .map((t) => ({
       name: t.displayName,
       value: t.indexInfo.value,
