@@ -12,11 +12,11 @@ import { PollenTrendChart } from "./PollenTrend.client";
 import { ChartConfig } from "@/components/ui/chart";
 
 function prepTodayBars(daily: PollenDaily) {
+  if (!daily?.pollenTypeInfo) return [];
   return daily.pollenTypeInfo
     .filter(
       (t) =>
-        ["GRASS", "WEED", "TREE"].includes(t.code) &&
-        t.indexInfo !== undefined,
+        t && ["GRASS", "WEED", "TREE"].includes(t.code) && t.indexInfo,
     )
     .map((t) => ({
       name: t.displayName,
@@ -42,23 +42,26 @@ function categoryColor(cat: string) {
 }
 
 function prepTrend(outlook: PollenDaily[]) {
-  return outlook.map((d) => {
-    const day = new Date(
-      d.date.year,
-      d.date.month - 1,
-      d.date.day,
-    ).toISOString();
+  if (!outlook) return [];
+  return outlook
+    .filter((d) => d?.date && d?.pollenTypeInfo)
+    .map((d) => {
+      const day = new Date(
+        d.date.year,
+        d.date.month - 1,
+        d.date.day,
+      ).toISOString();
 
-    const val = (code: "GRASS" | "WEED" | "TREE") =>
-      d.pollenTypeInfo.find((p) => p.code === code)?.indexInfo?.value ?? 0;
+      const val = (code: "GRASS" | "WEED" | "TREE") =>
+        d.pollenTypeInfo.find((p) => p?.code === code)?.indexInfo?.value ?? 0;
 
-    return {
-      day,
-      GRASS: val("GRASS"),
-      WEED: val("WEED"),
-      TREE: val("TREE"),
-    };
-  });
+      return {
+        day,
+        GRASS: val("GRASS"),
+        WEED: val("WEED"),
+        TREE: val("TREE"),
+      };
+    });
 }
 
 const chartConfig = {
