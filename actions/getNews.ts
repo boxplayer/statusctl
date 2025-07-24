@@ -1,15 +1,14 @@
 "use server";
 
-import { fetchRss } from "../lib/rss";
-import { Item } from "rss-parser";
+import { fetchRss, RssItem } from "../lib/rss";
 
 export const getArchNews = async () => {
   const feed = await fetchRss("https://archlinux.org/feeds/news/");
 
-  const items = feed.items.slice(0, 5).map((item: Item) => ({
+  const items = feed.items.slice(0, 5).map((item: RssItem) => ({
     title: item.title || "Untitled",
     link: item.link || "#",
-    pubDate: item.pubDate || "Unknown date",
+    pubDate: item.isoDate || "Unknown date",
     description: item.contentSnippet || "No description",
   }));
 
@@ -19,10 +18,10 @@ export const getArchNews = async () => {
 export const getNeovimNews = async () => {
   const feed = await fetchRss("https://neovim.io/news.xml");
 
-  const items = feed.items.slice(0, 5).map((item: Item) => ({
+  const items = feed.items.slice(0, 5).map((item: RssItem) => ({
     title: item.title || "Untitled",
     link: item.link || "#",
-    pubDate: item.pubDate || "Unknown date",
+    pubDate: item.isoDate || "Unknown date",
     description: item.contentSnippet || "No description",
   }));
 

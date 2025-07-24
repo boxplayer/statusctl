@@ -75,9 +75,11 @@ export async function fetchForecast(
       };
     }).filter(Boolean) as HourlySnap[];
 
-    return { current, hourly };
+    const weatherData = { current, hourly };
+
+    return weatherSummarySchema.parse(weatherData);
   } catch (error) {
-    console.error("Weather API response validation error:", error);
+    console.error("Weather data validation error:", error);
     throw new Error("weather-data-invalid");
   }
 }

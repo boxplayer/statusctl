@@ -1,18 +1,23 @@
 import { sub } from "date-fns";
 import { format } from "date-fns-tz";
+import z from "zod";
 
 const tz = "Europe/Warsaw";
 
-export interface NBPRate {
-  table: "A" | "B" | "C";
-  currency: "string";
-  code: string;
-  rates: {
-    no: string;
-    effectiveDate: string;
-    mid: number;
-  }[];
-}
+const NPBRateSchema = z.object({
+  table: z.enum(["A", "B", "C"]),
+  currency: z.string(),
+  code: z.string(),
+  rates: z.array(
+    z.object({
+      no: z.string(),
+      effectiveDate: z.string(),
+      mid: z.number(),
+    }),
+  ),
+});
+
+export type NBPRate = z.infer<typeof NPBRateSchema>;
 
 export interface FxPoint {
   date: string;
@@ -41,7 +46,14 @@ export const fetchFxRate = async (baseCurrency = "GBP"): Promise<FxSeries> => {
   if (!res.ok) throw new Error("fx-api-fail");
   const json = await res.json();
 
-  const fxRates = normaliseNbp(json);
+  const validatedJson = NPBRateSchema.safeParse(json);
+
+  if (!validatedJson.success) {
+    console.error("NBP API response validation error:", validatedJson.error);
+    throw new Error("fx-data-invalid");
+  }
+
+  const fxRates = normaliseNbp(validatedJson.data);
 
   return fxRates;
 };

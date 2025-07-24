@@ -25,8 +25,6 @@ export const getPollenData = cache(async () => {
   const bars = prepTodayBars(today);
   const trendData = prepTrend(outlook);
 
-  console.log({ outlook });
-
   return {
     today,
     outlook,
