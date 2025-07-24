@@ -7,11 +7,16 @@ import {
   TableCell,
   TableBody,
 } from "@/components/ui/table";
+import EmptyCard from "@/components/card/EmptyCard";
 import { getArchNews } from "../../../../../actions/getNews";
 import { Link } from "lucide-react";
 
 export default async function ArchNews() {
   const news = await getArchNews();
+
+  if (!news) {
+    return <EmptyCard title="Arch News" message="Missing arch news data" />;
+  }
 
   return (
     <Card>

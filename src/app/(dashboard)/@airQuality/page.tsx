@@ -6,63 +6,10 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { getPollenData } from "../../../../actions/getWeather";
-import { PollenDaily } from "../../../../lib/weather";
 import { PollenChart } from "./PollenChart.client";
 import { PollenTrendChart } from "./PollenTrend.client";
 import { ChartConfig } from "@/components/ui/chart";
-
-function prepTodayBars(daily: PollenDaily) {
-  if (!daily?.pollenTypeInfo) return [];
-  return daily.pollenTypeInfo
-    .filter(
-      (t) =>
-        t && ["GRASS", "WEED", "TREE"].includes(t.code) && t.indexInfo,
-    )
-    .map((t) => ({
-      name: t.displayName,
-      value: t.indexInfo.value,
-      category: t.indexInfo.category,
-      color: categoryColor(t.indexInfo.category),
-    }));
-}
-
-function categoryColor(cat: string) {
-  return (
-    (
-      {
-        None: "#d1d5db",
-        "Very Low": "#6ee7b7",
-        Low: "#34d399",
-        Moderate: "#fbbf24",
-        High: "#f87171",
-        "Very High": "#ef4444",
-      } as const
-    )[cat as keyof typeof categoryColor] ?? "#d1d5db"
-  );
-}
-
-function prepTrend(outlook: PollenDaily[]) {
-  if (!outlook) return [];
-  return outlook
-    .filter((d) => d?.date && d?.pollenTypeInfo)
-    .map((d) => {
-      const day = new Date(
-        d.date.year,
-        d.date.month - 1,
-        d.date.day,
-      ).toISOString();
-
-      const val = (code: "GRASS" | "WEED" | "TREE") =>
-        d.pollenTypeInfo.find((p) => p?.code === code)?.indexInfo?.value ?? 0;
-
-      return {
-        day,
-        GRASS: val("GRASS"),
-        WEED: val("WEED"),
-        TREE: val("TREE"),
-      };
-    });
-}
+import EmptyCard from "@/components/card/EmptyCard";
 
 const chartConfig = {
   WEED: {
@@ -80,16 +27,13 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default async function AirQuality() {
-  const { today, outlook } = await getPollenData();
+  const { today, bars, trendData } = await getPollenData();
 
-  //TODO: change this
-  if (!today || !outlook?.length) {
-    return <div> no data</div>;
+  if (!today || !bars || !trendData) {
+    return <EmptyCard title="AirQuality" message="Missing air quality data" />;
   }
 
-  const bars = prepTodayBars(today);
   const date = new Date(today.date.year, today.date.month - 1, today.date.day);
-  const trendData = prepTrend(outlook);
 
   return (
     <Card>

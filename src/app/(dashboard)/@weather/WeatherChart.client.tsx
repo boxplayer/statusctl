@@ -53,7 +53,6 @@ export const WeatherChart = ({
           position="top"
           formatter={(v: number) => `${v}`}
           fontSize={10}
-          fill="hsl(var(--foreground))"
         />
       </Area>
       <Area
@@ -69,7 +68,6 @@ export const WeatherChart = ({
           position="top"
           formatter={(v: number) => `${v}°`}
           fontSize={10}
-          fill="hsl(var(--foreground))"
         />
       </Area>
 

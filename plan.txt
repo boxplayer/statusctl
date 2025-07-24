@@ -255,3 +255,10 @@ Next.js 15 (App Router)
 │   └── askChatGPTAboutToday.ts
 └── /edge
     └── geo.ts  (geo-IP, sets cookie for location override)
+
+
+
+## Next Steps
+  - Zod type safety
+  - geo location ^
+  - unit tests

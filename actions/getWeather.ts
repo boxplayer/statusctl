@@ -1,7 +1,8 @@
 "use server";
 
 import { cache } from "react";
-import { fetchForecast, fetchPollen } from "../lib/weather";
+import { fetchForecast } from "../lib/weather";
+import { fetchPollen, prepTodayBars, prepTrend } from "../lib/pollen";
 
 export const getWeather = cache(async () => {
   return fetchForecast();
@@ -14,14 +15,22 @@ export const getPollenData = cache(async () => {
     return {
       today: undefined,
       outlook: [],
+      bars: [],
+      trendData: [],
     };
   }
 
   const today = summary.dailyInfo[0];
   const outlook = summary.dailyInfo;
+  const bars = prepTodayBars(today);
+  const trendData = prepTrend(outlook);
+
+  console.log({ outlook });
 
   return {
     today,
     outlook,
+    bars,
+    trendData,
   };
 });

@@ -7,11 +7,16 @@ import {
   TableCell,
   TableBody,
 } from "@/components/ui/table";
+import EmptyCard from "@/components/card/EmptyCard";
 import { getNeovimNews } from "../../../../../actions/getNews";
 import { Link } from "lucide-react";
 
 export default async function NeoVimNews() {
   const news = await getNeovimNews();
+
+  if (!news) {
+    return <EmptyCard title="NeoVim News" message="Missing neovim news data" />;
+  }
 
   return (
     <Card>

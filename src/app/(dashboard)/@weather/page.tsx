@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LucideThermometer } from "lucide-react";
 import { ChartConfig } from "@/components/ui/chart";
+import EmptyCard from "@/components/card/EmptyCard";
 
 import { getWeather } from "../../../../actions/getWeather";
 import { WeatherChart } from "./WeatherChart.client";
@@ -21,6 +22,10 @@ export default async function Weather() {
   // TODO: get weather by current location
   const weather = await getWeather();
   const { current, hourly } = weather;
+
+  if (!current || !hourly) {
+    return <EmptyCard title="Weather" message="Missing weather data" />;
+  }
 
   return (
     <Card>

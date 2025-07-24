@@ -8,6 +8,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import EmptyCard from "@/components/card/EmptyCard";
 
 const chartConfig = {
   rate: {
@@ -21,6 +22,10 @@ export default async function LiveFX({}: { baseCurrency: string }) {
 
   const { pair, latest, history } = fxRates;
 
+  if (!pair && !latest && !history) {
+    return <EmptyCard title="FX Rate" message="Missing FX Data" />;
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -28,7 +33,7 @@ export default async function LiveFX({}: { baseCurrency: string }) {
         <CardDescription>Updated {latest.date}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-row items-center gap-5 mb-4">
+        <div className="flex flex-row items-center gap-3 mb-4">
           <span className="text-3xl flex flex-row items-center">{pair}</span>
           <p className="text-3xl font-semibold">{latest.rate.toFixed(2)}</p>
         </div>
