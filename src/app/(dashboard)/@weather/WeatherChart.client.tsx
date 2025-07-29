@@ -46,11 +46,10 @@ export const WeatherChart = ({
         fill="var(--color-wind)"
         fillOpacity={0.4}
         stroke="var(--color-wind)"
-        stackId="a"
       >
         <LabelList
           dataKey="wind"
-          position="top"
+          position="bottom"
           formatter={(v: number) => `${v}`}
           fontSize={10}
         />
@@ -61,7 +60,6 @@ export const WeatherChart = ({
         fill="var(--color-temp)"
         fillOpacity={0.4}
         stroke="var(--color-temp)"
-        stackId="a"
       >
         <LabelList
           dataKey="temp"
