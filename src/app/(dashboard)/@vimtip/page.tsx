@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import EmptyCard from "@/components/card/EmptyCard";
-import { getVimTip } from "../../../../actions/askGemini";
+import { getVimTip } from "../../../../actions/askLLM";
 
 export default async function VimTip() {
   const response = await getVimTip();

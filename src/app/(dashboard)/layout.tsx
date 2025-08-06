@@ -10,6 +10,7 @@ export default function DashboardLayout({
   triviatip,
   news,
   airQuality,
+  weathertip,
 }: {
   children: ReactNode;
   weather: ReactNode;
@@ -18,6 +19,7 @@ export default function DashboardLayout({
   triviatip: ReactNode;
   news: ReactNode;
   airQuality: ReactNode;
+  weathertip: ReactNode;
 }) {
   return (
     <>
@@ -43,6 +45,7 @@ export default function DashboardLayout({
           </div>
         </div>
         {triviatip}
+        {weathertip}
         <div className="lg:col-span-2 md:col-span-1 row-span-2 min-w-0">
           {news}
         </div>
