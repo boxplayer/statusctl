@@ -36,6 +36,7 @@ export default async function Weather() {
       <CardHeader>
         <CardTitle>
           <div className="flex flex-row justify-between">
+            {JSON.stringify(h)}
             <div>Weather</div>
             <div className="text-muted-foreground text-sm">Warsaw</div>
           </div>
