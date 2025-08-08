@@ -21,11 +21,8 @@ const chartConfig = {
 
 export default async function Weather() {
   const h = headers();
-  const lat = h.get("x-geo-lat");
-  const lon = h.get("x-geo-lon");
   // const city = h.get("x-geo-city") ?? "Warsaw";
-  console.log(Object.fromEntries(h));
-  console.log({ lat }, { lon });
+  console.log(JSON.stringify(h));
   // TODO: get weather by current location
   const weather = await getWeather();
   const { current, hourly } = weather;
