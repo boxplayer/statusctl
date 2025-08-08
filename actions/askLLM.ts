@@ -45,7 +45,7 @@ export const getTriviaTip = cache(async () => {
 
   console.log("Generating new trivia tip");
   const newTip = await askGPT(
-    "gpt-4.1-mini",
+    "gpt-5-mini",
     `You are an expert trivia writer creating 'Tip of the Day' content.
       Generate a single trivia fact that would be useful in a general knowledge quiz.
       The fact should be from a major category like history, science, geography, arts, or literature.
@@ -71,21 +71,26 @@ export const getWeatherReport = cache(async () => {
 
   console.log("Generating new weather report");
   const newReport = await askGPT(
-    "o3",
-    `You are a concise weather forecaster.
-      Give the *overall weather outlook for tomorrow in Warsaw, Poland*.  
-      Include ➜ probability-of-precipitation, sunshine / cloud cover, temperature
-      range °C, wind speed km/h, and relative humidity %.
-      • **Consult at least five independent, reputable sources, preferably local ones**  
-        (e.g. MeteoBlue, AccuWeather, ECMWF, NOAA, Meteo.pl, WeatherAPI).
-      • **Cross-check** them and report the consensus / majority values.
-      • **Output exactly two lines, nothing else**
+    "gpt-5",
+    `
+    You are a concise weather forecaster.
 
-        Summary ≤ 250 characters.
-        2️⃣Sources: <list-of-sources-used> ( number must equal the distinct providers you actually referenced — minimum **5** )
+    TASK ➜ Give the *consensus* outlook for **tomorrow in Warsaw, Poland** based on at least FIVE reputable sources
+    (MeteoBlue, AccuWeather, ECMWF, NOAA, Meteo.pl, WeatherAPI, etc.).  
+    Cross-check them and use the majority values.
 
-      No back-ticks, No emojis, bullet points, no city name in summary or additional lines.
-    `,
+    ✏️ **Output format – EXACTLY three lines, nothing else:**
+
+    ☀️ <sunshine-percent>% sunshine   🌧️ <precip-percent>% <rain-type>
+    💧 <minRH>–<maxRH>% RH            🌬️ <wind-dir> <min-wind>–<max-wind> km/h
+       <list of sources>
+
+    Rules  
+    • Replace the angle-bracket placeholders with numbers / words.  
+    • Keep numbers as integers.  
+    • Use the four emojis and the double-space separators as shown.  
+    • Do **not** add city name, dates, headings, bullets, extra spaces
+  `,
   );
   await redis.set(key, newReport, { ex: 86_400 });
 

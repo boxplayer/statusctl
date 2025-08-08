@@ -17,7 +17,7 @@ export default async function VimTip() {
         <CardTitle>Trivia Tip</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="text-xl italic">{title}</div>
+        <div className="text-xl">{title}</div>
         <span className="text-lg flex text-muted-foreground flex-row items-center py-3">
           {description}
         </span>

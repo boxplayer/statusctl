@@ -20,7 +20,9 @@ export default async function WeatherTip() {
     );
   }
 
-  const [report, sources] = response.split(/\n(.+)/, 2);
+  const [line1, line2, srcLine] = response.trim().split("\n");
+  const [sunChip, rainChip] = line1.split(/\s{2,}/);
+  const [rhChip, windChip] = line2.split(/\s{2,}/);
 
   return (
     <Card>
@@ -33,13 +35,17 @@ export default async function WeatherTip() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <span className="text-lg flex text-muted-foreground flex-row items-center py-3">
-          {report}
+        <div className="text-xl">Tomorrow</div>
+        <span className="text-lg flex-col text-muted-foreground items-center py-3">
+          <div>{sunChip}</div>
+          <div>{rainChip}</div>
+          <div>{rhChip}</div>
+          <div>{windChip}</div>
         </span>
       </CardContent>
       <CardFooter>
         <span className="flex text-muted-foreground flex-row items-center py-3">
-          {sources}
+          {srcLine}
         </span>
       </CardFooter>
     </Card>
