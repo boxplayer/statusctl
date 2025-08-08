@@ -6,7 +6,6 @@ import EmptyCard from "@/components/card/EmptyCard";
 import { getWeather } from "../../../../actions/getWeather";
 import { WeatherChart } from "./WeatherChart.client";
 import { WeatherTable } from "./WeatherTable";
-import { headers } from "next/headers";
 
 const chartConfig = {
   temp: {
@@ -20,9 +19,6 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default async function Weather() {
-  const h = headers();
-  // const city = h.get("x-geo-city") ?? "Warsaw";
-  console.log(JSON.stringify(h));
   // TODO: get weather by current location
   const weather = await getWeather();
   const { current, hourly } = weather;
@@ -36,7 +32,6 @@ export default async function Weather() {
       <CardHeader>
         <CardTitle>
           <div className="flex flex-row justify-between">
-            {JSON.stringify(h)}
             <div>Weather</div>
             <div className="text-muted-foreground text-sm">Warsaw</div>
           </div>
