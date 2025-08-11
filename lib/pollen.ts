@@ -127,14 +127,12 @@ export const fetchPollen = async (
   const res = await fetch(
     `https://pollen.googleapis.com/v1/forecast:lookup?${qs}`,
     {
-      // next: { revalidate: 43_200 },
-      next: { revalidate: 60 },
+      next: { revalidate: 43_200 },
     },
   );
 
   if (!res.ok) throw new Error("pollen-api-fail");
   const data = await res.json();
 
-  console.log("Pollen API raw response date:", data.dailyInfo?.[0]?.date);
   return data;
 };
