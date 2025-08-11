@@ -127,7 +127,8 @@ export const fetchPollen = async (
   const res = await fetch(
     `https://pollen.googleapis.com/v1/forecast:lookup?${qs}`,
     {
-      next: { revalidate: 43_200 },
+      // next: { revalidate: 43_200 },
+      next: { revalidate: 60 },
     },
   );
 
