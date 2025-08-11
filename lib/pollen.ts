@@ -132,5 +132,8 @@ export const fetchPollen = async (
   );
 
   if (!res.ok) throw new Error("pollen-api-fail");
-  return res.json();
+  const data = await res.json();
+
+  console.log("Pollen API raw response date:", data.dailyInfo?.[0]?.date);
+  return data;
 };
