@@ -71,7 +71,7 @@ export const getWeatherReport = cache(async () => {
 
   console.log("Generating new weather report");
   const newReport = await askGPT(
-    "gpt-5",
+    "gpt-4o",
     `
     You are a concise weather forecaster.
 

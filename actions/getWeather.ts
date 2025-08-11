@@ -8,7 +8,7 @@ export const getWeather = cache(async () => {
   return fetchForecast();
 });
 
-export const getPollenData = cache(async () => {
+export const getPollenData = async () => {
   const summary = await fetchPollen();
 
   if (!summary?.dailyInfo?.length) {
@@ -31,4 +31,4 @@ export const getPollenData = cache(async () => {
     bars,
     trendData,
   };
-});
+};
