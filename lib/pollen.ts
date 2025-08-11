@@ -124,14 +124,16 @@ export const fetchPollen = async (
     key: process.env["GCP_API_KEY"]!,
   });
 
+  const today = new Date().toISOString().split("T")[0];
+  const tag = `pollen:${today}`;
+
   const res = await fetch(
     `https://pollen.googleapis.com/v1/forecast:lookup?${qs}`,
     {
-      next: { revalidate: 86_400 },
+      next: { revalidate: 86_400, tags: [tag] },
     },
   );
 
   if (!res.ok) throw new Error("pollen-api-fail");
   return res.json();
 };
-
