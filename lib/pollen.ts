@@ -122,6 +122,7 @@ export const fetchPollen = async (
     "location.longitude": lon.toString(),
     days: "5",
     key: process.env["GCP_API_KEY"]!,
+    v: "2",
   });
 
   const res = await fetch(
