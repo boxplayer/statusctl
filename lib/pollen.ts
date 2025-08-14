@@ -117,6 +117,9 @@ export const fetchPollen = async (
   lat = 52.2297,
   lon = 21.0122,
 ): Promise<PollenSummary> => {
+  const today = new Date().toISOString().split('T')[0];
+  const cacheTag = `pollen-${lat}-${lon}-${today}`;
+
   const qs = new URLSearchParams({
     "location.latitude": lat.toString(),
     "location.longitude": lon.toString(),
@@ -127,7 +130,7 @@ export const fetchPollen = async (
   const res = await fetch(
     `https://pollen.googleapis.com/v1/forecast:lookup?${qs}`,
     {
-      next: { revalidate: 43_200 },
+      next: { revalidate: 43_200, tags: [cacheTag] },
     },
   );
 
