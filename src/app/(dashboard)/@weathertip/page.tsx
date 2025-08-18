@@ -21,8 +21,8 @@ export default async function WeatherTip() {
   }
 
   const [line1, line2, srcLine] = response.trim().split("\n");
-  const [sunChip, rainChip] = line1.split(/\s{2,}/);
-  const [rhChip, windChip] = line2.split(/\s{2,}/);
+  const [sunChip, rainChip] = line1?.split(/\s{2,}/);
+  const [rhChip, windChip] = line2 ? line2.split(/\s{2,}/) : [null, null];
 
   return (
     <Card>
@@ -39,8 +39,8 @@ export default async function WeatherTip() {
         <span className="text-lg flex-col text-muted-foreground items-center py-3">
           <div>{sunChip}</div>
           <div>{rainChip}</div>
-          <div>{rhChip}</div>
-          <div>{windChip}</div>
+          <div>{rhChip && rhChip}</div>
+          <div>{windChip && windChip}</div>
         </span>
       </CardContent>
       <CardFooter>
