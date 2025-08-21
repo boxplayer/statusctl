@@ -44,12 +44,18 @@ export default function DashboardLayout({
             {vimtip}
           </div>
         </div>
-        {triviatip}
-        {weathertip}
         <div className="lg:col-span-2 md:col-span-1 row-span-2 min-w-0">
           {news}
         </div>
         {children}
+
+        {triviatip && (
+          <div className="lg:col-span-1 md:col-span-1">{triviatip}</div>
+        )}
+
+        {weathertip && (
+          <div className="lg:col-span-1 md:col-span-1">{weathertip}</div>
+        )}
       </main>
     </>
   );
