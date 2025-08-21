@@ -27,3 +27,16 @@ export const getNeovimNews = async () => {
 
   return items;
 };
+
+export const getHackerNews = async () => {
+  const feed = await fetchRss("https://hnrss.github.io/#firehose-feeds");
+
+  const items = feed.items.slice(0, 5).map((item: RssItem) => ({
+    title: item.title || "Untitled",
+    link: item.link || "#",
+    pubDate: item.isoDate || "Unknown date",
+    description: item.contentSnippet || "No description",
+  }));
+
+  return items;
+};
