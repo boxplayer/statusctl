@@ -34,7 +34,15 @@ export default async function ArchNews() {
           </TableHeader>
           <TableBody>
             {news.map((item, index) => (
-              <TableRow key={index}>
+              <TableRow
+                key={index}
+                className={
+                  new Date(item.pubDate).toDateString() ===
+                  new Date().toDateString()
+                    ? "bg-yellow-100 rounded-xl"
+                    : ""
+                }
+              >
                 <TableCell className="font-medium max-w-[12rem] truncate">
                   {item.title}
                 </TableCell>
