@@ -31,7 +31,9 @@ export default function DashboardLayout({
         grid 
         lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 
         gap-8
-        pt-4 sm:pt-10 px-8 sm:px-20 pb-20
+        pt-4 sm:pt-10 
+        px-8 sm:px-20 
+        pb-4 sm:pb-10
         justify-items-stretch
         xl:max-w-[80%]
         w-full mx-auto
