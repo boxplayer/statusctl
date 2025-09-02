@@ -80,6 +80,8 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --logo-gradient-start: #af4261;
+  --logo-gradient-end: #f3ec78;
 }
 
 .dark {
@@ -114,14 +116,19 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  /* --logo-gradient-start: #1a2980; */
+  --logo-gradient-start: #00c9ff;
+  /* --logo-gradient-end: #26d0ce; */
+
+  --logo-gradient-end: #92fe9d;
 }
 
 .logo-ascii {
-  /* background: -webkit-linear-gradient(45deg, #f3ec78, #af4261); */
-  /* background: -webkit-linear-gradient(45deg, #1f1c2c, #928dab); */
-  /* background: -webkit-linear-gradient(45deg, #1a2980, #26d0ce); */
-  /* background: -webkit-linear-gradient(45deg, #e55d87, #5fc3e4); */
-  background: -webkit-linear-gradient(45deg, #af4261, #f3ec78);
+  background: -webkit-linear-gradient(
+    45deg,
+    var(--logo-gradient-start),
+    var(--logo-gradient-end)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: clamp(0.2rem, 1vw, 1.2rem);
@@ -130,13 +137,13 @@
 
 @media (max-width: 768px) {
   .logo-ascii {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 }
 
 @media (max-width: 480px) {
   .logo-ascii {
-    font-size: 0.4rem;
+    font-size: 0.35rem;
   }
 }
 

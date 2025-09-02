@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import "@/app/(dashboard)/globals.css";
 import Header from "@/components/layout/Header";
+import { Button } from "@/components/ui/button";
+import { Github } from "lucide-react";
 
 export default function DashboardLayout({
   children,
@@ -29,7 +31,7 @@ export default function DashboardLayout({
         grid 
         lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 
         gap-8
-        p-8 sm:p-20 pb-20
+        pt-4 sm:pt-10 px-8 sm:px-20 pb-20
         justify-items-stretch
         xl:max-w-[80%]
         w-full mx-auto
@@ -57,6 +59,18 @@ export default function DashboardLayout({
           <div className="lg:col-span-1 md:col-span-1">{weathertip}</div>
         )}
       </main>
+      <div className="flex flex-row justify-center">
+        <a
+          href="https://github.com/boxplayer/statusctl"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="lg:hidden sm:flex"
+        >
+          <Button variant="outline" size="icon">
+            <Github className="h-[1.2rem] w-[1.2rem]" />
+          </Button>
+        </a>
+      </div>
     </>
   );
 }

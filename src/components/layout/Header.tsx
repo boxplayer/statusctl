@@ -3,7 +3,7 @@ import { Github } from "lucide-react";
 import { Button } from "../ui/button";
 
 export const asciiLogo = `
-▄▄███▄▄· ███████╗████████╗ █████╗ ████████╗██╗   ██╗███████╗ ██████╗████████╗██╗     
+▄▄███▄▄  ███████╗████████╗ █████╗ ████████╗██╗   ██╗███████╗ ██████╗████████╗██╗     
 ██╔════╝ ██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██║   ██║██╔════╝██╔════╝╚══██╔══╝██║     
 ███████╗ ███████╗   ██║   ███████║   ██║   ██║   ██║███████╗██║        ██║   ██║     
 ╚════██║ ╚════██║   ██║   ██╔══██║   ██║   ██║   ██║╚════██║██║        ██║   ██║     
@@ -21,6 +21,7 @@ export default function Header() {
           href="https://github.com/boxplayer/statusctl"
           target="_blank"
           rel="noopener noreferrer"
+          className="hidden lg:flex"
         >
           <Button variant="outline" size="icon">
             <Github className="h-[1.2rem] w-[1.2rem]" />
